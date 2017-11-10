@@ -1,0 +1,13 @@
+---
+title: "PfS / DDPI Staff Assessment"
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r read, echo=FALSE}
+survey <- read.csv("data.csv")
+person <- 25
+```
+
+This survey is for `r survey[person,'Q2.1']` `r survey[person,'Q2.2']`
+
