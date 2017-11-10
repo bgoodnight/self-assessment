@@ -2,12 +2,232 @@
 title: "PfS / DDPI Staff Assessment"
 output:
   pdf_document: default
+  word_document: default
   html_document: default
 ---
-```{r read, echo=FALSE}
-survey <- read.csv("data.csv")
-person <- 25
+```{r read, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(dplyr)
+#remove the following two lines when ready to generate reports
+#survey = read.csv('data.csv', as.is = T)
+#person <- survey[25,]
+
+#uncomment following line when ready to generate reports
+person <- survey[individual,]
 ```
 
-This survey is for `r survey[person,'Q2.1']` `r survey[person,'Q2.2']`
+###Individualized report for `r person[,'Q2.1']` `r person[,'Q2.2']`
 
+```{r responses, echo=FALSE, warning=FALSE, message=FALSE}
+Current <- c(person[1,'Q4.2_1'],
+person[1,'Q4.3_1'],
+person[1,'Q4.4_1'],
+person[1,'Q4.5_1'],
+person[1,'Q4.6_1'],
+person[1,'Q4.7_1'],
+person[1,'Q4.8_1'],
+person[1,'Q4.9_1'],
+person[1,'Q4.10_1'],
+person[1,'Q4.11_1'],
+person[1,'Q4.12_1'],
+person[1,'Q4.13_1'],
+person[1,'Q4.14_1'],
+person[1,'Q4.15_1'],
+person[1,'Q4.16_1'],
+person[1,'Q6.2_1'],
+person[1,'Q6.3_1'],
+person[1,'Q6.4_1'],
+person[1,'Q6.5_1'],
+person[1,'Q6.6_1'],
+person[1,'Q7.2_1'],
+person[1,'Q7.3_1'],
+person[1,'Q7.4_1'],
+person[1,'Q7.5_1'],
+person[1,'Q7.6_1'],
+person[1,'Q7.7_1'],
+person[1,'Q7.8_1'],
+person[1,'Q8.2_1'],
+person[1,'Q8.3_1'],
+person[1,'Q8.4_1'],
+person[1,'Q8.5_1'],
+person[1,'Q9.2_1'],
+person[1,'Q9.3_1'],
+person[1,'Q10.2_1'],
+person[1,'Q10.3_1'],
+person[1,'Q10.4_1'],
+person[1,'Q10.5_1'],
+person[1,'Q10.6_1'],
+person[1,'Q11.2_1'],
+person[1,'Q11.3_1'],
+person[1,'Q12.2_1'],
+person[1,'Q12.3_1'],
+person[1,'Q12.4_1'],
+person[1,'Q12.5_1'],
+person[1,'Q12.6_1'],
+person[1,'Q12.7_1'],
+person[1,'Q13.2_1'],
+person[1,'Q13.3_1'],
+person[1,'Q13.4_1'],
+person[1,'Q13.5_1'],
+person[1,'Q13.6_1'],
+person[1,'Q13.7_1'],
+person[1,'Q13.8_1'],
+person[1,'Q13.9_1'])
+
+Current <- as.numeric(Current)
+
+Desired <- c(person[1,'Q4.2_2'],
+person[1,'Q4.3_2'],
+person[1,'Q4.4_2'],
+person[1,'Q4.5_2'],
+person[1,'Q4.6_2'],
+person[1,'Q4.7_2'],
+person[1,'Q4.8_2'],
+person[1,'Q4.9_2'],
+person[1,'Q4.10_2'],
+person[1,'Q4.11_2'],
+person[1,'Q4.12_2'],
+person[1,'Q4.13_2'],
+person[1,'Q4.14_2'],
+person[1,'Q4.15_2'],
+person[1,'Q4.16_2'],
+person[1,'Q6.2_2'],
+person[1,'Q6.3_2'],
+person[1,'Q6.4_2'],
+person[1,'Q6.5_2'],
+person[1,'Q6.6_2'],
+person[1,'Q7.2_2'],
+person[1,'Q7.3_2'],
+person[1,'Q7.4_2'],
+person[1,'Q7.5_2'],
+person[1,'Q7.6_2'],
+person[1,'Q7.7_2'],
+person[1,'Q7.8_2'],
+person[1,'Q8.2_2'],
+person[1,'Q8.3_2'],
+person[1,'Q8.4_2'],
+person[1,'Q8.5_2'],
+person[1,'Q9.2_2'],
+person[1,'Q9.3_2'],
+person[1,'Q10.2_2'],
+person[1,'Q10.3_2'],
+person[1,'Q10.4_2'],
+person[1,'Q10.5_2'],
+person[1,'Q10.6_2'],
+person[1,'Q11.2_2'],
+person[1,'Q11.3_2'],
+person[1,'Q12.2_2'],
+person[1,'Q12.3_2'],
+person[1,'Q12.4_2'],
+person[1,'Q12.5_2'],
+person[1,'Q12.6_2'],
+person[1,'Q12.7_2'],
+person[1,'Q13.2_2'],
+person[1,'Q13.3_2'],
+person[1,'Q13.4_2'],
+person[1,'Q13.5_2'],
+person[1,'Q13.6_2'],
+person[1,'Q13.7_2'],
+person[1,'Q13.8_2'],
+person[1,'Q13.9_2'])
+
+Desired <- as.numeric(Desired)
+
+Competency = c('PDMPs- Statutes and Laws',
+'PDMPs-  Implementation/Expansion',
+'PDMPs-  Data Sharing and Linking',
+'PDMP  Integration with EHR Pharmacy Dispensing Software systems and/or HIE systems',
+'PDMP  Interstate Data Sharing',
+'Heroin/Fentanyl',
+'Insurance  Mechanisms',
+'CDC  Prescribing Guideline',
+'Academic  Detailing',
+'Naloxone',
+'PfS  Indicators',
+'ICD-10-CM  Transition',
+'Data  Dashboards',
+'Program  Evaluation',
+'Legal/Policy Tools',
+'Monthly  1:1 Calls with Awardees',
+'APRs/TRs',
+'Site  Visits ',
+'Financial  Award Management',
+'Understanding  of Role',
+'Monthly  1:1 Calls with Awardees',
+'Responsiveness  to Scientific TA Requests',
+'Using  Quantitative Analytic Techniques',
+'Using  Qualitative Analytic Techniques',
+'Annual  Progress Reports (APR)/Technical Reviews (TR)',
+'Site  Visits',
+'Understanding  of Role',
+'Monthly  1:1 Calls with Awardees',
+'APRs/TRs',
+'Site  Visits',
+'Site  Visits',
+'Support to States',
+'Support to SSTs',
+'Relationship  Building w/ States',
+'Relationship  Building w/Program Partners',
+'Relationship  Building w/in State Support Teams (SST)',
+'Effective  Communication',
+'Conflict  Management/Resolution',
+'Accountability',
+'Ongoing  Learning, Professional Development and Continuous Improvement',
+'Program  Development, Improvement and Evaluation',
+'Fostering  Collaboration and Leveraging Resources',
+'Time  Management',
+'Providing  TA to States',
+'Decision  Making',
+'Individual  Project Management',
+'Program  Evaluation',
+'Engaging  Stakeholders',
+'Describing  the Program/Project',
+'Focusing  the Evaluation Design',
+'Development  of IRB  and OMB Packages',
+'Gathering  Credible Evidence',
+'Justifying  Conclusions',
+'Ensuring  Use and Sharing Lessons Learned')
+
+results <- data.frame(Competency,Current,Desired)
+
+results[results == 7] <- NA
+
+results$Difference= results$Desired - results$Current
+
+results <- results[complete.cases(results), ]
+results <- unique(results)
+```
+Overall, `r person[,'Q2.1']` reported being at Approaching Awareness level for **`r sum(results$Current == 1)`** domains, Awareness for **`r sum(results$Current == 2)`** domains, Between Awareness and Application for **`r sum(results$Current == 3)`** domains, Application level for **`r sum(results$Current == 4)`** domains, between Application and Mastery for **`r sum(results$Current == 5)`** domains, and Mastery level for **`r sum(results$Current == 6)`** domains.
+
+```{r histogram, echo=FALSE, warning=FALSE, message=FALSE}
+results$Current <- factor(results$Current,
+                          levels = c(1,2,3,4,5,6),
+                          labels = c("Approaching Awareness","Awareness","Between Awareness and Application","Application","Between Application and Mastery","Mastery"))
+results$Desired <- factor(results$Desired,
+                          levels = c(1,2,3,4,5,6),
+                          labels = c("Approaching Awareness","Awareness","Between Awareness and Application","Application","Between Application and Mastery","Mastery"))
+library(ggplot2)
+ggplot(results, aes(Current)) + 
+  geom_bar(position="dodge") +
+  coord_flip() +
+  ggtitle("Distribution of Competency Ratings") +
+  labs(y = "Number of Ratings", x = "Competency Rating")
+```
+
+`r person[,'Q2.1']` reported wanting to achieve mastery in the following `r sum(results$Desired == 'Mastery' & results$Current != 'Mastery')` domains:
+```{r results table, echo=FALSE, warning=FALSE, message=FALSE}
+results %>%
+  filter(Desired == 'Mastery' & Current != 'Mastery') %>%
+  arrange(Competency) %>%
+  select(Competency,Current) %>%
+  kable
+```
+
+####There are `r sum(results$Difference == max(results$Difference))` key areas where `r person[,'Q2.1']` needs the most improvement.
+```{r difference table, echo=FALSE, warning=FALSE, message=FALSE}
+results %>%
+  filter(Difference == max(Difference)) %>%
+  arrange(Competency) %>%
+  select(Competency,Current,Desired) %>%
+  kable
+```
