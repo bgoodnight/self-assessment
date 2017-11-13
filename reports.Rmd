@@ -8,12 +8,13 @@ output:
 ```{r read, echo=FALSE, warning=FALSE, message=FALSE}
 library(knitr)
 library(dplyr)
+
 #remove the following two lines when ready to generate reports
-#survey = read.csv('data.csv', as.is = T)
-#person <- survey[25,]
+survey = read.csv('data.csv', as.is = T)
+person <- survey[25,]
 
 #uncomment following line when ready to generate reports
-person <- survey[individual,]
+#person <- survey[individual,]
 ```
 
 ###Individualized report for `r person[,'Q2.1']` `r person[,'Q2.2']`
