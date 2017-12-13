@@ -1,0 +1,337 @@
+---
+title: "PfS / DDPI Staff Assessment"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+```{r read, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(dplyr)
+library(reshape2)
+
+survey = read.csv('data.csv', stringsAsFactors = FALSE)
+survey <- survey[3:30,]
+survey<- data.frame(data.matrix(survey))
+```
+
+##Aggregate report for all participants
+
+```{r create results, echo=FALSE, warning=FALSE, message=FALSE}
+Current <- data.frame(survey[,'Q4.2_1'],
+survey[,'Q4.3_1'],
+survey[,'Q4.4_1'],
+survey[,'Q4.5_1'],
+survey[,'Q4.6_1'],
+survey[,'Q4.7_1'],
+survey[,'Q4.8_1'],
+survey[,'Q4.9_1'],
+survey[,'Q4.10_1'],
+survey[,'Q4.11_1'],
+survey[,'Q4.12_1'],
+survey[,'Q4.13_1'],
+survey[,'Q4.14_1'],
+survey[,'Q4.15_1'],
+survey[,'Q4.16_1'],
+survey[,'Q6.2_1'],
+survey[,'Q6.3_1'],
+survey[,'Q6.4_1'],
+survey[,'Q6.5_1'],
+survey[,'Q6.6_1'],
+survey[,'Q7.2_1'],
+survey[,'Q7.3_1'],
+survey[,'Q7.4_1'],
+survey[,'Q7.5_1'],
+survey[,'Q7.6_1'],
+survey[,'Q7.7_1'],
+survey[,'Q7.8_1'],
+survey[,'Q8.2_1'],
+survey[,'Q8.3_1'],
+survey[,'Q8.4_1'],
+survey[,'Q8.5_1'],
+survey[,'Q9.2_1'],
+survey[,'Q9.3_1'],
+survey[,'Q10.2_1'],
+survey[,'Q10.3_1'],
+survey[,'Q10.4_1'],
+survey[,'Q10.5_1'],
+survey[,'Q10.6_1'],
+survey[,'Q11.2_1'],
+survey[,'Q11.3_1'],
+survey[,'Q12.2_1'],
+survey[,'Q12.3_1'],
+survey[,'Q12.4_1'],
+survey[,'Q12.5_1'],
+survey[,'Q12.6_1'],
+survey[,'Q12.7_1'],
+survey[,'Q13.2_1'],
+survey[,'Q13.3_1'],
+survey[,'Q13.4_1'],
+survey[,'Q13.5_1'],
+survey[,'Q13.6_1'],
+survey[,'Q13.7_1'],
+survey[,'Q13.8_1'],
+survey[,'Q13.9_1'])
+
+Desired <- data.frame(survey[,'Q4.2_2'],
+survey[,'Q4.3_2'],
+survey[,'Q4.4_2'],
+survey[,'Q4.5_2'],
+survey[,'Q4.6_2'],
+survey[,'Q4.7_2'],
+survey[,'Q4.8_2'],
+survey[,'Q4.9_2'],
+survey[,'Q4.10_2'],
+survey[,'Q4.11_2'],
+survey[,'Q4.12_2'],
+survey[,'Q4.13_2'],
+survey[,'Q4.14_2'],
+survey[,'Q4.15_2'],
+survey[,'Q4.16_2'],
+survey[,'Q6.2_2'],
+survey[,'Q6.3_2'],
+survey[,'Q6.4_2'],
+survey[,'Q6.5_2'],
+survey[,'Q6.6_2'],
+survey[,'Q7.2_2'],
+survey[,'Q7.3_2'],
+survey[,'Q7.4_2'],
+survey[,'Q7.5_2'],
+survey[,'Q7.6_2'],
+survey[,'Q7.7_2'],
+survey[,'Q7.8_2'],
+survey[,'Q8.2_2'],
+survey[,'Q8.3_2'],
+survey[,'Q8.4_2'],
+survey[,'Q8.5_2'],
+survey[,'Q9.2_2'],
+survey[,'Q9.3_2'],
+survey[,'Q10.2_2'],
+survey[,'Q10.3_2'],
+survey[,'Q10.4_2'],
+survey[,'Q10.5_2'],
+survey[,'Q10.6_2'],
+survey[,'Q11.2_2'],
+survey[,'Q11.3_2'],
+survey[,'Q12.2_2'],
+survey[,'Q12.3_2'],
+survey[,'Q12.4_2'],
+survey[,'Q12.5_2'],
+survey[,'Q12.6_2'],
+survey[,'Q12.7_2'],
+survey[,'Q13.2_2'],
+survey[,'Q13.3_2'],
+survey[,'Q13.4_2'],
+survey[,'Q13.5_2'],
+survey[,'Q13.6_2'],
+survey[,'Q13.7_2'],
+survey[,'Q13.8_2'],
+survey[,'Q13.9_2'])
+
+Competency = c('PDMP Statutes and Laws',
+'PDMP Implementation/Expansion',
+'PDMP Data Sharing and Linking',
+'PDMP Integration with Pharmacy Software',
+'PDMP Interstate Data Sharing',
+'Heroin/Fentanyl',
+'Insurance Mechanisms',
+'CDC Prescribing Guideline',
+'Academic Detailing',
+'Naloxone',
+'PfS Indicators',
+'ICD-10-CM Transition',
+'Data Dashboards',
+'Program Evaluation',
+'Legal/Policy Tools',
+'Monthly 1:1 Calls with Awardees',
+'APRs/TRs',
+'Site Visits ',
+'Financial Award Management',
+'Understanding of Role',
+'Monthly 1:1 Calls with Awardees',
+'Responsiveness to Scientific TA Requests',
+'Using Quantitative Analytic Techniques',
+'Using Qualitative Analytic Techniques',
+'Annual Progress Reports (APR)/Technical Reviews (TR)',
+'Site Visits',
+'Understanding  of Role',
+'Monthly 1:1 Calls with Awardees',
+'APRs/TRs',
+'Site Visits',
+'Site Visits',
+'Support to States',
+'Support to SSTs',
+'Relationship Building w/ States',
+'Relationship Building w/Program Partners',
+'Relationship Building w/in State Support Teams (SST)',
+'Effective Communication',
+'Conflict Management/Resolution',
+'Accountability',
+'Ongoing Learning and Professional Development',
+'Program Development, Improvement and Evaluation',
+'Fostering Collaboration and Leveraging Resources',
+'Time Management',
+'Providing TA to States',
+'Decision Making',
+'Individual Project Management',
+'Program Evaluation',
+'Engaging Stakeholders',
+'Describing the Program/Project',
+'Focusing the Evaluation Design',
+'Development of IRB and OMB Packages',
+'Gathering Credible Evidence',
+'Justifying Conclusions',
+'Ensuring Use and Sharing Lessons Learned')
+
+Section = c('Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Topical',
+'Project Officer',
+'Project Officer',
+'Project Officer',
+'Project Officer',
+'Project Officer',
+'Science Officer',
+'Science Officer',
+'Science Officer',
+'Science Officer',
+'Science Officer',
+'Science Officer',
+'Science Officer',
+'Evaluation Officer',
+'Evaluation Officer',
+'Evaluation Officer',
+'Evaluation Officer',
+'Subject Matter Expert',
+'Subject Matter Expert',
+'Interpersonal',
+'Interpersonal',
+'Interpersonal',
+'Interpersonal',
+'Interpersonal',
+'Professionalism',
+'Professionalism',
+'Program Management',
+'Program Management',
+'Program Management',
+'Program Management',
+'Program Management',
+'Program Management',
+'Evaluation',
+'Evaluation',
+'Evaluation',
+'Evaluation',
+'Evaluation',
+'Evaluation',
+'Evaluation',
+'Evaluation')
+
+Part = c('A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'A',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B',
+'B')
+
+results <- data.frame(Competency,Part,Section)
+
+colnames(Current) <- Competency
+colnames(Desired) <- Competency
+
+results$Current <- colMeans(Current, na.rm = TRUE)
+results$Desired <- colMeans(Desired, na.rm = TRUE)
+
+```
+The PfS / DDPI Staff Assessment survey was divided into three parts, including:
+
+- **Part A: Topical and Role-Specific Competencies**
+- **Part B: Functioning Competencies**
+- **Part C: Skills, Knowledge, and Processes Important to You**
+
+###Part A: Topical and Role-Specific Competencies
+
+For Part **A** of the PfS / DDPI Staff Assessment survey all participants were asked to rate their **Current** and **Desired** level for each of a set of listed competencies.
+
+- **Current** skill level was defined as your present level of competency in a particular skill or knowledge area
+- **Desired** level was defined as the level of ability you were interested in attaining for a particular skill or knowledge area in the future
+
+```{r Overall Bar Graph, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+filter(results, Section == "Topical") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., Competency, desc(variable)) -> graph
+
+ggplot(graph, aes(x = Competency, y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  coord_flip() +
+  labs(x = "Role-Specific Competency", y="Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  theme(
+    legend.position = "top",
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank()
+  )
+```
+\newpage
