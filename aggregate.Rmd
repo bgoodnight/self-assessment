@@ -1,9 +1,9 @@
 ---
 title: "PfS / DDPI Staff Assessment"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 ```{r read, echo=FALSE, warning=FALSE, message=FALSE}
 library(knitr)
@@ -310,28 +310,30 @@ The PfS / DDPI Staff Assessment survey was divided into three parts, including:
 
 ###Part A: Topical and Role-Specific Competencies
 
-For Part **A** of the PfS / DDPI Staff Assessment survey all participants were asked to rate their **Current** and **Desired** level for each of a set of listed competencies.
+For **Part A** of the PfS / DDPI Staff Assessment survey all participants were asked to rate their **Current** and **Desired** level for each of a set of listed competencies.
 
-- **Current** skill level was defined as your present level of competency in a particular skill or knowledge area
+- **Current** skill level was defined as your present level of competency in a particular skill or area
 - **Desired** level was defined as the level of ability you were interested in attaining for a particular skill or knowledge area in the future
 
-```{r Overall Bar Graph, echo=FALSE, warning=FALSE, message=FALSE}
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Topical and Role-Specific Competencies**.
+
+This distribution illustrates areas of strength (competencies near the top) and areas where growth and training may be needed (competencies  near the bottom).
+
+```{r Overall Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%"}
 library(ggplot2)
 filter(results, Section == "Topical") %>%
 select(Competency, Current, Desired) %>%
   melt(.,id.vars="Competency") %>%
   arrange(., Competency, desc(variable)) -> graph
 
-ggplot(graph, aes(x = Competency, y = value, fill=variable)) +
+ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
   geom_bar(stat='identity',position='identity',alpha=.9) +
-  coord_flip() +
-  labs(x = "Role-Specific Competency", y="Level Reported", fill="Rating") +
+  labs(x = "Topical or Role-Specific Competency", y="Average Level Reported", fill="Rating") +
   scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
-  theme(
-    legend.position = "top",
-    axis.text.x = element_text(angle = 90, hjust = 1),
-    axis.title.x=element_blank(),
-    axis.title.y=element_blank()
-  )
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  theme(legend.position='top')
 ```
-\newpage
+
