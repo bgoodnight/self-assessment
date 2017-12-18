@@ -298,6 +298,9 @@ results <- data.frame(Competency,Part,Section)
 colnames(Current) <- Competency
 colnames(Desired) <- Competency
 
+Current[Current == 7] <- NA
+Desired[Desired == 7] <- NA
+
 results$Current <- colMeans(Current, na.rm = TRUE)
 results$Desired <- colMeans(Desired, na.rm = TRUE)
 
@@ -337,3 +340,74 @@ ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
   theme(legend.position='top')
 ```
 
+```{r Project Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%"}
+library(ggplot2)
+filter(results, Section == "Project Officer") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., Competency, desc(variable)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Topical or Role-Specific Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  theme(legend.position='top')
+```
+
+```{r Science Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%"}
+library(ggplot2)
+filter(results, Section == "Science Officer") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., Competency, desc(variable)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Topical or Role-Specific Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  theme(legend.position='top')
+```
+
+```{r Evaluation Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%"}
+library(ggplot2)
+filter(results, Section == "Evaluation Officer") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., Competency, desc(variable)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Topical or Role-Specific Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  theme(legend.position='top')
+```
+
+```{r Subject Matter Expert Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%"}
+library(ggplot2)
+filter(results, Section == "Subject Matter Expert") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., Competency, desc(variable)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Topical or Role-Specific Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  theme(legend.position='top')
+```
