@@ -48,7 +48,6 @@ survey[,'Q7.8_1'],
 survey[,'Q8.2_1'],
 survey[,'Q8.3_1'],
 survey[,'Q8.4_1'],
-survey[,'Q8.5_1'],
 survey[,'Q9.2_1'],
 survey[,'Q9.3_1'],
 survey[,'Q10.2_1'],
@@ -103,7 +102,6 @@ survey[,'Q7.8_2'],
 survey[,'Q8.2_2'],
 survey[,'Q8.3_2'],
 survey[,'Q8.4_2'],
-survey[,'Q8.5_2'],
 survey[,'Q9.2_2'],
 survey[,'Q9.3_2'],
 survey[,'Q10.2_2'],
@@ -152,18 +150,17 @@ Competency = c('PDMP Statutes and Laws',
 'Responsiveness to Scientific TA Requests',
 'Using Quantitative Analytic Techniques',
 'Using Qualitative Analytic Techniques',
-'Annual Progress Reports (APR)/Technical Reviews (TR)',
+'Annual Progress Reports / Technical Reviews',
 'Site Visits',
 'Understanding  of Role',
 'Monthly 1:1 Calls with Awardees',
 'APRs/TRs',
 'Site Visits',
-'Site Visits',
 'Support to States',
 'Support to SSTs',
 'Relationship Building w/ States',
 'Relationship Building w/Program Partners',
-'Relationship Building w/in State Support Teams (SST)',
+'Relationship Building w/in State Support Teams',
 'Effective Communication',
 'Conflict Management/Resolution',
 'Accountability',
@@ -213,7 +210,6 @@ Section = c('Topical',
 'Evaluation Officer',
 'Evaluation Officer',
 'Evaluation Officer',
-'Evaluation Officer',
 'Subject Matter Expert',
 'Subject Matter Expert',
 'Interpersonal',
@@ -239,7 +235,6 @@ Section = c('Topical',
 'Evaluation')
 
 Part = c('A',
-'A',
 'A',
 'A',
 'A',
@@ -344,10 +339,34 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
 
 \newpage
 
-The table below shows all **Topical Competencies** listed by order of the size of the *Difference* between average reported **Current** and **Desired** skill levels.
+#####Key Strengths
 
-```{r Overall Table,  echo=FALSE, warning=FALSE, message=FALSE}
-filter(results, Section == "Topical") %>%
+The table below shows the **Topical Competencies** with the highest reported **Current** skill levels. These competencies reflect areas of relative strength.
+
+```{r Strengths Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Section == "Topical" & Current > 3.5) %>%
+  select(Competency, Current) %>%
+  arrange(., desc(Current)) %>%
+  kable(.,digits = 2)
+```
+
+#####Key Deficits
+
+The table below shows the **Topical Competencies** with the lowest reported **Current** skill levels. These competencies reflect important areas where more training may be neccesary.
+
+```{r Deficits Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Section == "Topical" & Current < 2.5) %>%
+  select(Competency, Current) %>%
+  arrange(., Current) %>%
+  kable(.,digits = 2)
+```
+
+#####Areas of Desired Growth
+
+The table below shows **Topical Competencies** with the highest degree of *Difference* between average reported **Current** and **Desired** skill levels.
+
+```{r Desired Growth Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Section == "Topical" & Difference > 1.49) %>%
   select(Competency, Current, Desired, Difference) %>%
   arrange(., desc(Difference)) %>%
   kable(.,digits = 2)
@@ -356,6 +375,12 @@ filter(results, Section == "Topical") %>%
 Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
 
 \newpage
+
+####Section 2: Role-Specific Competencies
+
+#####Project Officers
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Project Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
 ```{r Project Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=3}
 filter(results, Section == "Project Officer") %>%
@@ -375,6 +400,23 @@ ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
   theme(legend.position='top')
 ```
 
+The table below shows all **Role-Specific Competencies** for **Project Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+
+```{r Project Officer Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Section == "Project Officer") %>%
+  select(Competency, Current, Desired, Difference) %>%
+  arrange(., desc(Difference)) %>%
+  kable(.,digits = 2)
+```
+
+Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+
+\newpage
+
+#####Science Officers
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Science Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+
 ```{r Science Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=4}
 filter(results, Section == "Science Officer") %>%
 select(Competency, Current, Desired) %>%
@@ -393,7 +435,24 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
   theme(legend.position='top')
 ```
 
-```{r Evaluation Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2}
+The table below shows all **Role-Specific Competencies** for **Science Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+
+```{r Science Officer Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Section == "Science Officer") %>%
+  select(Competency, Current, Desired, Difference) %>%
+  arrange(., desc(Difference)) %>%
+  kable(.,digits = 2)
+```
+
+Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+
+\newpage
+
+#####Evaluation Officers
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Evaluation Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+
+```{r Evaluation Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2.5}
 library(ggplot2)
 filter(results, Section == "Evaluation Officer") %>%
 select(Competency, Current, Desired) %>%
@@ -411,6 +470,23 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
   ggtitle("Evaluation Officer Role-Specific Competencies") +
   theme(legend.position='top')
 ```
+
+The table below shows all **Role-Specific Competencies** for **Evaluation Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+
+```{r Evaluation Officer Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Section == "Evaluation Officer") %>%
+  select(Competency, Current, Desired, Difference) %>%
+  arrange(., desc(Difference)) %>%
+  kable(.,digits = 2)
+```
+
+Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+
+\newpage
+
+#####Subject Matter Experts
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Subject Matter Experts**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
 ```{r Subject Matter Expert Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2}
 library(ggplot2)
@@ -430,3 +506,281 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
   ggtitle("Subject Matter Expert Role-Specific Competencies") +
   theme(legend.position='top')
 ```
+
+The table below shows all **Role-Specific Competencies** for **Subject Matter Experts** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+
+```{r Subject Matter Expert Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Section == "Subject Matter Expert") %>%
+  select(Competency, Current, Desired, Difference) %>%
+  arrange(., desc(Difference)) %>%
+  kable(.,digits = 2)
+```
+
+Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+
+\newpage
+
+###Part B: Functioning Competencies
+
+For **Part B** of the PfS / DDPI Staff Assessment survey all participants were asked to again rate their **Current** and **Desired** level for each of a set of listed **Functioning Competencies**.
+
+The **Functioning Competencies** were categorized into four key areas:
+
+ - Interpersonal Skills
+ - Professionalism
+ - Program Management
+ - Evaluation
+
+The table below shows all **Functioning Competencies** sorted within their respective categories by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+
+```{r Functional Competencies Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Part == "B") %>%
+  select(Competency, Section, Current, Desired, Difference) %>%
+  arrange(., desc(Section), desc(Difference)) %>%
+  kable(.,digits = 2)
+```
+
+Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+
+\newpage
+
+#####Key Strengths
+
+The table below shows the **Functional Competencies** with the highest reported **Current** skill levels. These competencies reflect areas of relative strength.
+
+```{r B Strengths Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Part == "B" & Current > 4.5) %>%
+  select(Competency, Current) %>%
+  arrange(., desc(Current)) %>%
+  kable(.,digits = 2)
+```
+
+#####Key Deficits
+
+The table below shows the **Functional Competencies** with the lowest reported **Current** skill levels. These competencies reflect important areas where more training may be neccesary.
+
+```{r B Deficits Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Part == "B" & Current < 3.75) %>%
+  select(Competency, Current) %>%
+  arrange(., Current) %>%
+  kable(.,digits = 2)
+```
+
+#####Areas of Desired Growth
+
+The table below shows **Functional Competencies** with the highest degree of *Difference* between average reported **Current** and **Desired** skill levels.
+
+```{r B Desired Growth Table,  echo=FALSE, warning=FALSE, message=FALSE}
+filter(results, Part == "B" & Difference > 1.25) %>%
+  select(Competency, Current, Desired, Difference) %>%
+  arrange(., desc(Difference)) %>%
+  kable(.,digits = 2)
+```
+
+\newpage
+
+####Interpersonal Skills
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Interpersonal Skills**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+
+```{r Interpersonal Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2.8}
+library(ggplot2)
+filter(results, Section == "Interpersonal") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., desc(variable), desc(value)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  ggtitle("Interpersonal Skills") +
+  theme(legend.position='top')
+```
+
+####Professionalism
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Professionalism** competencies. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+
+```{r Professionalism Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2}
+library(ggplot2)
+filter(results, Section == "Professionalism") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., desc(variable), desc(value)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  ggtitle("Professionalism") +
+  theme(legend.position='top')
+```
+
+\newpage
+
+####Program Management
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Program Management** competencies. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+
+```{r Program Management Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=3}
+library(ggplot2)
+filter(results, Section == "Program Management") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., desc(variable), desc(value)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  ggtitle("Program Management") +
+  theme(legend.position='top')
+```
+
+####Evaluation
+
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Evaluation** competencies. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+
+```{r Evaluation Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=3.8}
+library(ggplot2)
+filter(results, Section == "Evaluation") %>%
+select(Competency, Current, Desired) %>%
+  melt(.,id.vars="Competency") %>%
+  arrange(., desc(variable), desc(value)) -> graph
+
+ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=variable)) +
+  geom_bar(stat='identity',position='identity',alpha=.9) +
+  labs(x = "Competency", y="Average Level Reported", fill="Rating") +
+  scale_fill_manual(labels = c("Current", "Desired"), values = c("grey60", "grey20")) +
+  coord_flip(ylim = c(1,6)) +
+  geom_hline(yintercept = c(2,4,6), color = 'grey30') +
+  scale_y_continuous(breaks = c(2,4,6), labels = c("Awareness","Application","Mastery")) +
+  geom_text(aes(label=round(value, digits = 2)), hjust=1, color = "grey90", size=3.25) +
+  ggtitle("Evaluation") +
+  theme(legend.position='top')
+```
+
+\newpage
+
+###Part C: Skills, Knowledge, and Processes Important to You
+
+For **Part C** of the PfS / DDPI Staff Assessment survey all participants rated how important each of the following skills, knowledge areas, and processes were for their job.
+
+```{r create Part C data, echo=FALSE, warning=FALSE, message=FALSE}
+CResults <- data.frame(
+  c('Collaboration among co-workers and divisions',
+'Developing clear and assertive communications skills',
+'Conducting effective and efficient meetings',
+'Listening carefully',
+'Encouraging teamwork and collaboration',
+'Constructively receiving criticism',
+'Providing constructive feedback',
+'Leading people and delegating tasks to achieve goals',
+'Empowering others to achieve results and holding them accountable',
+'Motivating others in order to reach program and organizational goals',
+'Influencing others in a way that results in consensus and agreement',
+'Understanding organization mission and vision',
+'Understanding program priorities and goals',
+'Understanding the big picture',
+'Access to continuous learning and new knowledge acquisition opportunities',
+'Access to professional development opportunities',
+'Access to a mentor to assist with professional development',
+'Establishing and tracking goals and objectives',
+'Establishing work plans and timeframes',
+'Taking appropriate and timely action to address unexpected changes',
+'Communicating regularly with your peer officer group',
+'Communicating regularly with cross-peer officer groups',
+'Meeting with the PfS/DDPI Program Director to discuss new ideas',
+'Meeting with the PfS/DDPI TA Coordinator to discuss technical assistance',
+'Meeting with the PfS/DDPI Science Coordinator to discuss ideas',
+'Conducting regular meetings with direct reports to discuss performance',
+'Communicating program concerns and challenges with supervisors',
+'Recognizing and rewarding people for doing their best'),
+c('Skills',
+'Skills',
+'Skills',
+'Skills',
+'Skills',
+'Skills',
+'Skills',
+'Skills',
+'Skills',
+'Skills',
+'Skills',
+'Knowledge',
+'Knowledge',
+'Knowledge',
+'Knowledge',
+'Knowledge',
+'Knowledge',
+'Processes',
+'Processes',
+'Processes',
+'Processes',
+'Processes',
+'Processes',
+'Processes',
+'Processes',
+'Processes',
+'Processes',
+'Processes'))
+
+PartC <- data.frame(
+survey[, 'Q14.2_1'],
+survey[, 'Q14.2_2'],
+survey[, 'Q14.2_3'],
+survey[, 'Q14.2_4'],
+survey[, 'Q14.2_5'],
+survey[, 'Q14.2_6'],
+survey[, 'Q14.2_7'],
+survey[, 'Q14.2_8'],
+survey[, 'Q14.2_9'],
+survey[, 'Q14.2_10'],
+survey[, 'Q14.2_11'],
+survey[, 'Q14.3_1'],
+survey[, 'Q14.3_2'],
+survey[, 'Q14.3_3'],
+survey[, 'Q14.3_4'],
+survey[, 'Q14.3_5'],
+survey[, 'Q14.3_6'],
+survey[, 'Q14.4_1'],
+survey[, 'Q14.4_2'],
+survey[, 'Q14.4_3'],
+survey[, 'Q14.4_4'],
+survey[, 'Q14.4_5'],
+survey[, 'Q14.4_6'],
+survey[, 'Q14.4_7'],
+survey[, 'Q14.4_8'],
+survey[, 'Q14.4_9'],
+survey[, 'Q14.4_10'],
+survey[, 'Q14.4_11'])
+
+colnames(CResults) <- c("Question","Area")
+
+PartC[PartC == 6] <- NA
+
+CResults$Rating <- colMeans(PartC, na.rm = TRUE)
+
+```
+
+####Skills
+`r CResults %>% filter(Area == 'Skills') %>% select(., 'Question','Rating') %>% kable(., digits = 2)`
+
+####Knowledge
+`r CResults %>% filter(Area == 'Knowledge') %>% select(., 'Question','Rating') %>% kable(., digits = 2)`
+
+####Processes
+`r CResults %>% filter(Area == 'Processes') %>% select(., 'Question','Rating') %>% kable(., digits = 2)`

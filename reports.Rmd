@@ -2,18 +2,20 @@
 title: "PfS / DDPI Staff Assessment"
 output:
   pdf_document: default
+  html_document:
+    df_print: paged
 ---
 ```{r read, echo=FALSE, warning=FALSE, message=FALSE}
 library(knitr)
 library(dplyr)
 library(reshape2)
 
-#remove the following two lines when ready to generate reports
-#survey = read.csv('data.csv', as.is = T)
-#person <- survey[21,]
+#use the following two lines to generate a single report
+survey = read.csv('data.csv', as.is = T)
+person <- survey[30,]
 
-#uncomment following line when ready to generate reports
-person <- survey[individual,]
+#use following line when ready to generate all reports
+#person <- survey[individual,]
 ```
 
 ##Individualized report for `r person[,'Q2.1']` `r person[,'Q2.2']`
@@ -157,7 +159,7 @@ Competency = c('PDMP Statutes and Laws',
 'Responsiveness to Scientific TA Requests',
 'Using Quantitative Analytic Techniques',
 'Using Qualitative Analytic Techniques',
-'Annual Progress Reports (APR)/Technical Reviews (TR)',
+'Annual Progress Reports / Technical Reviews',
 'Site Visits',
 'Understanding  of Role',
 'Monthly 1:1 Calls with Awardees',
@@ -168,13 +170,13 @@ Competency = c('PDMP Statutes and Laws',
 'Support to SSTs',
 'Relationship Building w/ States',
 'Relationship Building w/Program Partners',
-'Relationship Building w/in State Support Teams (SST)',
+'Relationship Building w/in State Support Teams',
 'Effective Communication',
 'Conflict Management/Resolution',
 'Accountability',
 'Ongoing Learning and Professional Development',
 'Program Development, Improvement and Evaluation',
-'Fostering Collaboration and Leveraging Resources',
+'Fostering Collaboration / Leveraging Resources',
 'Time Management',
 'Providing TA to States',
 'Decision Making',
@@ -315,7 +317,7 @@ For Parts **A** and **B** you were asked to rate your **Current** and **Desired*
 
 Your **Current** level was defined as your present level of competency in a particular skill or knowledge area, and your **Desired** level indicated the level of ability you were interested in attaining for a particular skill or knowledge area in the future.
 
-Overall, `r person[,'Q2.1']` reported being at Approaching Awareness level for **`r sum(results$Current == 1)`** domain`r (if(sum(results$Current == 1)==1) "" else "s")`, Awareness for **`r sum(results$Current == 2)`** domain`r (if(sum(results$Current == 2)==1) "" else "s")`, Between Awareness and Application for **`r sum(results$Current == 3)`** domain`r (if(sum(results$Current == 3)==1) "" else "s")`, Application level for **`r sum(results$Current == 4)`** domain`r (if(sum(results$Current == 4)==1) "" else "s")`, between Application and Mastery for **`r sum(results$Current == 5)`** domain`r (if(sum(results$Current == 5)==1) "" else "s")`, and Mastery level for **`r sum(results$Current == 6)`** domain`r (if(sum(results$Current == 6)==1) "" else "s")`.
+Overall, you reported being at Approaching Awareness level for **`r sum(results$Current == 1)`** domain`r (if(sum(results$Current == 1)==1) "" else "s")`, Awareness for **`r sum(results$Current == 2)`** domain`r (if(sum(results$Current == 2)==1) "" else "s")`, Between Awareness and Application for **`r sum(results$Current == 3)`** domain`r (if(sum(results$Current == 3)==1) "" else "s")`, Application level for **`r sum(results$Current == 4)`** domain`r (if(sum(results$Current == 4)==1) "" else "s")`, between Application and Mastery for **`r sum(results$Current == 5)`** domain`r (if(sum(results$Current == 5)==1) "" else "s")`, and Mastery level for **`r sum(results$Current == 6)`** domain`r (if(sum(results$Current == 6)==1) "" else "s")`.
 
 ```{r Overall Bar Graph, echo=FALSE, warning=FALSE, message=FALSE}
 results$CurrentNum <- results$Current
@@ -338,11 +340,11 @@ ggplot(results, aes(Current)) +
 
 ####Current and Desired Competencies
 
-Overall, `r person[,'Q2.1']` reported an average **Current** competency level of **`r round(mean(results$CurrentNum),2)`** which corresponds roughly to **`r ordered(round(mean(results$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+Overall, you reported an average **Current** competency level of **`r round(mean(results$CurrentNum),2)`** which corresponds approximately to **`r ordered(round(mean(results$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
 
-`r person[,'Q2.1']` reported an average **Desired** competency level of **`r round(mean(results$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(results$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+You reported an average **Desired** competency level of **`r round(mean(results$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(results$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
 
-`r person[,'Q2.1']` reported wanting to achieve **Mastery** in the following **`r sum(results$Desired == 'Mastery' & results$Current != 'Mastery')`** domains:
+You reported wanting to achieve **Mastery** in the following **`r sum(results$Desired == 'Mastery' & results$Current != 'Mastery')`** competency areas:
 ```{r results table, echo=FALSE, warning=FALSE, message=FALSE}
 results %>%
   filter(Desired == 'Mastery' & Current != 'Mastery') %>%
@@ -351,7 +353,7 @@ results %>%
   kable()
 ```
 
-####There `r (if(sum(results$Difference == max(results$Difference))==1) "is" else "are")` `r sum(results$Difference == max(results$Difference))` key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` where `r person[,'Q2.1']` needs the most improvement.
+####There `r (if(sum(results$Difference == max(results$Difference))==1) "is" else "are")` `r sum(results$Difference == max(results$Difference))` key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` where you reported wanting the most improvement.
 
 ```{r difference table, echo=FALSE, warning=FALSE, message=FALSE}
 results %>%
@@ -361,17 +363,19 @@ results %>%
   kable()
 ```
 
-The relatively high difference between `r person[,'Q2.1']`'s **Current** and **Desired** skill levels indicate the competenc`r (if(sum(results$Difference == max(results$Difference))==1) "y" else "ies")` listed above as `r (if(sum(results$Difference == max(results$Difference))==1) "a " else "")`key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` for future training. `r person[,'Q2.1']` should therefore consider speaking to a supervisor about seeking training opportunities in the area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` listed above.
+The relatively high difference between your **Current** and **Desired** skill levels indicate the competenc`r (if(sum(results$Difference == max(results$Difference))==1) "y" else "ies")` listed above as `r (if(sum(results$Difference == max(results$Difference))==1) "a " else "")`key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` for future training. Consider speaking to your supervisor about seeking training opportunities in the area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` listed above.
 
 \newpage
+
 ###Detailed Results by Section
+
 ####Part A - Section 1: Topical Competencies
 
-Regarding **Topical Competencies**, `r person[,'Q2.1']` reported an average **Current** competency level of **`r round(mean(filter(results, Section == "Topical")$CurrentNum),2)`** which corresponds roughly to **`r ordered(round(mean(filter(results, Section == "Topical")$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+Regarding **Topical Competencies**, you reported an average **Current** competency level of **`r round(mean(filter(results, Section == "Topical")$CurrentNum),2)`** which corresponds approximately to **`r ordered(round(mean(filter(results, Section == "Topical")$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
 
-`r person[,'Q2.1']` reported an average **Desired** competency level of **`r round(mean(filter(results, Section == "Topical")$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == "Topical")$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+You reported an average **Desired** competency level of **`r round(mean(filter(results, Section == "Topical")$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == "Topical")$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
 
-The graph below shows the difference between `r person[,'Q2.1']`'s **Current** and **Desired** level for all **Topical Competencies**. 
+The graph below shows the difference between your **Current** and **Desired** level for all **Topical Competencies**. 
 
 ```{r Topical Results Plot, echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Section == "Topical") %>%
@@ -394,7 +398,7 @@ ggplot(graph, aes(x = Competency, y = value2, fill=variable)) +
   )
 ```
 
-The table below lists the **Topical Competencies** where `r person[,'Q2.1']` reported the largest gap between **Current** and **Desired** levels. These competencies may indicate important areas of focus for `r person[,'Q2.1']`'s training.
+The table below lists the **Topical Competencies** where you reported the largest gap between **Current** and **Desired** levels. These topical competencies indicate key areas of focus for your training.
 
 ```{r Topical Results, echo=FALSE, warning=FALSE, message=FALSE}
 Topical <- filter(results, Section == "Topical")
@@ -407,21 +411,14 @@ Topical %>%
 ```
 
 \newpage
+
 ####Part A - Section 2: Role-Specific Competencies
 
-Regarding **Role-Specific Competencies**, `r person[,'Q2.1']` reported an average **Current** competency level of **`r round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$CurrentNum),2)`** which corresponds roughly to **`r ordered(round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+Regarding **Role-Specific Competencies**, you reported an average **Current** competency level of **`r round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$CurrentNum),2)`** which corresponds approximately to **`r ordered(round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
 
-`r person[,'Q2.1']` reported an average **Desired** competency level of **`r round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+You reported an average **Desired** competency level of **`r round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert")$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
 
-The table below shows all **Role-Specific Competencies** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas for future training.
-
-```{r Role Results Table, echo=FALSE, warning=FALSE, message=FALSE}
-results %>%
-  filter(Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert") %>%
-  arrange(desc(Difference)) %>%
-  select(Competency,Current, Desired, Difference) %>%
-  kable()
-```
+The graph below shows the difference between your **Current** and **Desired** level for all **Role-Specific Competencies**.
 
 ```{r Role Results Plot, echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert") %>%
@@ -444,25 +441,31 @@ ggplot(graph, aes(x = Competency, y = value2, fill=variable)) +
   )
 ```
 
-\newpage
-####Part B - Functioning Competencies
-```{r set Interpersonal Section, echo=FALSE, warning=FALSE, message=FALSE}
-section <- c("Interpersonal")
-```
-#####`r section` Skills
-Regarding **`r section` Skills**, `r person[,'Q2.1']` reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds roughly to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+The table below shows all **Role-Specific Competencies** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired**, which indicates that these may be important areas to consider focusing on for future training.
 
-`r person[,'Q2.1']` reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
-
-The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas for future training.
-
-```{r Interpersonal Results Table, echo=FALSE, warning=FALSE, message=FALSE}
+```{r Role Results Table, echo=FALSE, warning=FALSE, message=FALSE}
 results %>%
-  filter(Section == section) %>%
+  filter(Section == "Project Officer" | Section == "Science Officer" | Section == "Evaluation Officer" | Section == "Subject Matter Expert") %>%
   arrange(desc(Difference)) %>%
   select(Competency,Current, Desired, Difference) %>%
   kable()
 ```
+
+\newpage
+
+####Part B - Functioning Competencies
+
+```{r set Interpersonal Section, echo=FALSE, warning=FALSE, message=FALSE}
+section <- c("Interpersonal")
+```
+
+#####`r section` Skills
+
+Regarding **`r section` Skills**, you reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds approximately to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+You reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+The graph below shows the difference between your **Current** and **Desired** level for all **`r section` Skills**.
 
 ```{r Interpersonal Results Plot, echo=FALSE, warning=FALSE, message=FALSE}
 filter(results,  Section == section) %>%
@@ -485,24 +488,27 @@ ggplot(graph, aes(x = Competency, y = value2, fill=variable)) +
   )
 ```
 
-\newpage
-```{r set Professionalism Section, echo=FALSE, warning=FALSE, message=FALSE}
-section <- c("Professionalism")
-```
-#####`r section` Skills
-Regarding **`r section` Skills**, `r person[,'Q2.1']` reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds roughly to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas to consider focusing on for future training.
 
-`r person[,'Q2.1']` reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
-
-The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas for future training.
-
-```{r Professionalism Results Table, echo=FALSE, warning=FALSE, message=FALSE}
+```{r Interpersonal Results Table, echo=FALSE, warning=FALSE, message=FALSE}
 results %>%
   filter(Section == section) %>%
   arrange(desc(Difference)) %>%
   select(Competency,Current, Desired, Difference) %>%
   kable()
 ```
+
+\newpage
+```{r set Professionalism Section, echo=FALSE, warning=FALSE, message=FALSE}
+section <- c("Professionalism")
+```
+#####`r section` Skills
+
+Regarding **`r section` Skills**, you reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds approximately to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+You reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+The graph below shows the difference between your **Current** and **Desired** level for all **`r section` Skills**.
 
 ```{r Professionalism Results Plot, echo=FALSE, warning=FALSE, message=FALSE}
 filter(results,  Section == section) %>%
@@ -525,24 +531,27 @@ ggplot(graph, aes(x = Competency, y = value2, fill=variable)) +
   )
 ```
 
-\newpage
-```{r set Program Management Section, echo=FALSE, warning=FALSE, message=FALSE}
-section <- c("Program Management")
-```
-#####`r section` Skills
-Regarding **`r section` Skills**, `r person[,'Q2.1']` reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds roughly to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas to consider focusing on for future training.
 
-`r person[,'Q2.1']` reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
-
-The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas for future training.
-
-```{r Program Management Results Table, echo=FALSE, warning=FALSE, message=FALSE}
+```{r Professionalism Results Table, echo=FALSE, warning=FALSE, message=FALSE}
 results %>%
   filter(Section == section) %>%
   arrange(desc(Difference)) %>%
   select(Competency,Current, Desired, Difference) %>%
   kable()
 ```
+
+\newpage
+```{r set Program Management Section, echo=FALSE, warning=FALSE, message=FALSE}
+section <- c("Program Management")
+```
+#####`r section` Skills
+
+Regarding **`r section` Skills**, you reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds approximately to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+You reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+The graph below shows the difference between your **Current** and **Desired** level for all **`r section` Skills**.
 
 ```{r Program Management Results Plot, echo=FALSE, warning=FALSE, message=FALSE}
 filter(results,  Section == section) %>%
@@ -565,24 +574,27 @@ ggplot(graph, aes(x = Competency, y = value2, fill=variable)) +
   )
 ```
 
-\newpage
-```{r set Evaluation Section, echo=FALSE, warning=FALSE, message=FALSE}
-section <- c("Evaluation")
-```
-#####`r section` Skills
-Regarding **`r section` Skills**, `r person[,'Q2.1']` reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds roughly to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas to consider focusing on for future training.
 
-`r person[,'Q2.1']` reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
-
-The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas for future training.
-
-```{r Evaluation Results Table, echo=FALSE, warning=FALSE, message=FALSE}
+```{r Program Management Results Table, echo=FALSE, warning=FALSE, message=FALSE}
 results %>%
   filter(Section == section) %>%
   arrange(desc(Difference)) %>%
   select(Competency,Current, Desired, Difference) %>%
   kable()
 ```
+
+\newpage
+```{r set Evaluation Section, echo=FALSE, warning=FALSE, message=FALSE}
+section <- c("Evaluation")
+```
+#####`r section` Skills
+
+Regarding **`r section` Skills**, you reported an average **Current** competency level of **`r round(mean(filter(results, Section == section)$CurrentNum),2)`** which corresponds approximately to **`r ordered(round(mean(filter(results, Section == section)$CurrentNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+You reported an average **Desired** competency level of **`r round(mean(filter(results, Section == section)$DesiredNum),2)`** which corresponds to **`r ordered(round(mean(filter(results, Section == section)$DesiredNum),0), levels = c(1,2,3,4,5,6), labels = c("Approaching Awareness","Awareness","Awareness to Application","Application","Application to Mastery","Mastery"))`**.
+
+The graph below shows the difference between your **Current** and **Desired** level for all **`r section` Skills**.
 
 ```{r Evaluation Results Plot, echo=FALSE, warning=FALSE, message=FALSE}
 filter(results,  Section == section) %>%
@@ -605,10 +617,20 @@ ggplot(graph, aes(x = Competency, y = value2, fill=variable)) +
   )
 ```
 
+The table below shows all **`r section` Skills** sorted by the difference between their **Current** and **Desired** level. Competencies near the top of the table have a larger gap between **Current** and **Desired** which indicates that these may be important areas to consider focusing on for future training.
+
+```{r Evaluation Results Table, echo=FALSE, warning=FALSE, message=FALSE}
+results %>%
+  filter(Section == section) %>%
+  arrange(desc(Difference)) %>%
+  select(Competency,Current, Desired, Difference) %>%
+  kable()
+```
+
 \newpage
 ####Part C - Skills, Knowledge and Processes Important to You
 
-Below is a summary of how important `r person[,'Q2.1']` reported each of the following skills, knowledge areas, and processes to be for their job.
+Below is a summary of how important you reported each of the following skills, knowledge areas, and processes to be for your job.
 
 ```{r create Part C data, echo=FALSE, warning=FALSE, message=FALSE}
 PartC <- data.frame(
