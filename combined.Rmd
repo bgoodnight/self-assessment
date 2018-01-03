@@ -1,5 +1,5 @@
 ---
-title: "PfS / DDPI Staff Assessment"
+title: "PfS / DDPI Staff Self-Assessment"
 output:
   pdf_document: default
   html_document:
@@ -363,7 +363,7 @@ results %>%
   kable()
 ```
 
-The relatively high difference between your **Current** and **Desired** skill levels indicate the competenc`r (if(sum(results$Difference == max(results$Difference))==1) "y" else "ies")` listed above as `r (if(sum(results$Difference == max(results$Difference))==1) "a " else "")`key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` for future training. Consider speaking to your supervisor about seeking training opportunities in the area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` listed above.
+The relatively high difference between your **Current** and **Desired** skill levels indicate the competenc`r (if(sum(results$Difference == max(results$Difference))==1) "y" else "ies")` listed above as `r (if(sum(results$Difference == max(results$Difference))==1) "a " else "")`key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` for future training. Consider speaking to your supervisor about how you can work toward increasing your competency in the area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` listed above, including identifying relevant training opportunities.
 
 \newpage
 
@@ -401,7 +401,7 @@ ggplot(graph, aes(x = Competency, y = value2, fill=variable)) +
   )
 ```
 
-The table below lists the **Topical Competencies** where you reported the largest gap between **Current** and **Desired** levels. These topical competencies indicate key areas of focus for your training.
+The table below lists the **Topical Competencies** where you reported the largest gap between **Current** and **Desired** levels. These topical competencies indicate key areas of future focus for your training.
 
 ```{r Topical Results, echo=FALSE, warning=FALSE, message=FALSE}
 Topical <- filter(results, Section == "Topical")
@@ -744,133 +744,123 @@ PartC$Rating <- ordered(PartC$Rating,
 
 \newpage
 
----
-title: "PfS / DDPI Staff Assessment"
-output:
-  pdf_document: default
-  html_document:
-    df_print: paged
----
 ```{r aggregate read, echo=FALSE, warning=FALSE, message=FALSE}
-library(knitr)
-library(dplyr)
-library(reshape2)
 
-survey = read.csv('data.csv', stringsAsFactors = FALSE)
-survey <- survey[3:30,]
-survey<- data.frame(data.matrix(survey))
+aggregate = read.csv('data.csv', stringsAsFactors = FALSE)
+aggregate <- aggregate[3:30,]
+aggregate<- data.frame(data.matrix(aggregate))
 ```
 
 #Aggregate report for all participants
 
 ```{r aggregate create results, echo=FALSE, warning=FALSE, message=FALSE}
-Current <- data.frame(survey[,'Q4.2_1'],
-survey[,'Q4.3_1'],
-survey[,'Q4.4_1'],
-survey[,'Q4.5_1'],
-survey[,'Q4.6_1'],
-survey[,'Q4.7_1'],
-survey[,'Q4.8_1'],
-survey[,'Q4.9_1'],
-survey[,'Q4.10_1'],
-survey[,'Q4.11_1'],
-survey[,'Q4.12_1'],
-survey[,'Q4.13_1'],
-survey[,'Q4.14_1'],
-survey[,'Q4.15_1'],
-survey[,'Q4.16_1'],
-survey[,'Q6.2_1'],
-survey[,'Q6.3_1'],
-survey[,'Q6.4_1'],
-survey[,'Q6.5_1'],
-survey[,'Q6.6_1'],
-survey[,'Q7.2_1'],
-survey[,'Q7.3_1'],
-survey[,'Q7.4_1'],
-survey[,'Q7.5_1'],
-survey[,'Q7.6_1'],
-survey[,'Q7.7_1'],
-survey[,'Q7.8_1'],
-survey[,'Q8.2_1'],
-survey[,'Q8.3_1'],
-survey[,'Q8.4_1'],
-survey[,'Q9.2_1'],
-survey[,'Q9.3_1'],
-survey[,'Q10.2_1'],
-survey[,'Q10.3_1'],
-survey[,'Q10.4_1'],
-survey[,'Q10.5_1'],
-survey[,'Q10.6_1'],
-survey[,'Q11.2_1'],
-survey[,'Q11.3_1'],
-survey[,'Q12.2_1'],
-survey[,'Q12.3_1'],
-survey[,'Q12.4_1'],
-survey[,'Q12.5_1'],
-survey[,'Q12.6_1'],
-survey[,'Q12.7_1'],
-survey[,'Q13.2_1'],
-survey[,'Q13.3_1'],
-survey[,'Q13.4_1'],
-survey[,'Q13.5_1'],
-survey[,'Q13.6_1'],
-survey[,'Q13.7_1'],
-survey[,'Q13.8_1'],
-survey[,'Q13.9_1'])
+Current <- data.frame(aggregate[,'Q4.2_1'],
+aggregate[,'Q4.3_1'],
+aggregate[,'Q4.4_1'],
+aggregate[,'Q4.5_1'],
+aggregate[,'Q4.6_1'],
+aggregate[,'Q4.7_1'],
+aggregate[,'Q4.8_1'],
+aggregate[,'Q4.9_1'],
+aggregate[,'Q4.10_1'],
+aggregate[,'Q4.11_1'],
+aggregate[,'Q4.12_1'],
+aggregate[,'Q4.13_1'],
+aggregate[,'Q4.14_1'],
+aggregate[,'Q4.15_1'],
+aggregate[,'Q4.16_1'],
+aggregate[,'Q6.2_1'],
+aggregate[,'Q6.3_1'],
+aggregate[,'Q6.4_1'],
+aggregate[,'Q6.5_1'],
+aggregate[,'Q6.6_1'],
+aggregate[,'Q7.2_1'],
+aggregate[,'Q7.3_1'],
+aggregate[,'Q7.4_1'],
+aggregate[,'Q7.5_1'],
+aggregate[,'Q7.6_1'],
+aggregate[,'Q7.7_1'],
+aggregate[,'Q7.8_1'],
+aggregate[,'Q8.2_1'],
+aggregate[,'Q8.3_1'],
+aggregate[,'Q8.4_1'],
+aggregate[,'Q9.2_1'],
+aggregate[,'Q9.3_1'],
+aggregate[,'Q10.2_1'],
+aggregate[,'Q10.3_1'],
+aggregate[,'Q10.4_1'],
+aggregate[,'Q10.5_1'],
+aggregate[,'Q10.6_1'],
+aggregate[,'Q11.2_1'],
+aggregate[,'Q11.3_1'],
+aggregate[,'Q12.2_1'],
+aggregate[,'Q12.3_1'],
+aggregate[,'Q12.4_1'],
+aggregate[,'Q12.5_1'],
+aggregate[,'Q12.6_1'],
+aggregate[,'Q12.7_1'],
+aggregate[,'Q13.2_1'],
+aggregate[,'Q13.3_1'],
+aggregate[,'Q13.4_1'],
+aggregate[,'Q13.5_1'],
+aggregate[,'Q13.6_1'],
+aggregate[,'Q13.7_1'],
+aggregate[,'Q13.8_1'],
+aggregate[,'Q13.9_1'])
 
-Desired <- data.frame(survey[,'Q4.2_2'],
-survey[,'Q4.3_2'],
-survey[,'Q4.4_2'],
-survey[,'Q4.5_2'],
-survey[,'Q4.6_2'],
-survey[,'Q4.7_2'],
-survey[,'Q4.8_2'],
-survey[,'Q4.9_2'],
-survey[,'Q4.10_2'],
-survey[,'Q4.11_2'],
-survey[,'Q4.12_2'],
-survey[,'Q4.13_2'],
-survey[,'Q4.14_2'],
-survey[,'Q4.15_2'],
-survey[,'Q4.16_2'],
-survey[,'Q6.2_2'],
-survey[,'Q6.3_2'],
-survey[,'Q6.4_2'],
-survey[,'Q6.5_2'],
-survey[,'Q6.6_2'],
-survey[,'Q7.2_2'],
-survey[,'Q7.3_2'],
-survey[,'Q7.4_2'],
-survey[,'Q7.5_2'],
-survey[,'Q7.6_2'],
-survey[,'Q7.7_2'],
-survey[,'Q7.8_2'],
-survey[,'Q8.2_2'],
-survey[,'Q8.3_2'],
-survey[,'Q8.4_2'],
-survey[,'Q9.2_2'],
-survey[,'Q9.3_2'],
-survey[,'Q10.2_2'],
-survey[,'Q10.3_2'],
-survey[,'Q10.4_2'],
-survey[,'Q10.5_2'],
-survey[,'Q10.6_2'],
-survey[,'Q11.2_2'],
-survey[,'Q11.3_2'],
-survey[,'Q12.2_2'],
-survey[,'Q12.3_2'],
-survey[,'Q12.4_2'],
-survey[,'Q12.5_2'],
-survey[,'Q12.6_2'],
-survey[,'Q12.7_2'],
-survey[,'Q13.2_2'],
-survey[,'Q13.3_2'],
-survey[,'Q13.4_2'],
-survey[,'Q13.5_2'],
-survey[,'Q13.6_2'],
-survey[,'Q13.7_2'],
-survey[,'Q13.8_2'],
-survey[,'Q13.9_2'])
+Desired <- data.frame(aggregate[,'Q4.2_2'],
+aggregate[,'Q4.3_2'],
+aggregate[,'Q4.4_2'],
+aggregate[,'Q4.5_2'],
+aggregate[,'Q4.6_2'],
+aggregate[,'Q4.7_2'],
+aggregate[,'Q4.8_2'],
+aggregate[,'Q4.9_2'],
+aggregate[,'Q4.10_2'],
+aggregate[,'Q4.11_2'],
+aggregate[,'Q4.12_2'],
+aggregate[,'Q4.13_2'],
+aggregate[,'Q4.14_2'],
+aggregate[,'Q4.15_2'],
+aggregate[,'Q4.16_2'],
+aggregate[,'Q6.2_2'],
+aggregate[,'Q6.3_2'],
+aggregate[,'Q6.4_2'],
+aggregate[,'Q6.5_2'],
+aggregate[,'Q6.6_2'],
+aggregate[,'Q7.2_2'],
+aggregate[,'Q7.3_2'],
+aggregate[,'Q7.4_2'],
+aggregate[,'Q7.5_2'],
+aggregate[,'Q7.6_2'],
+aggregate[,'Q7.7_2'],
+aggregate[,'Q7.8_2'],
+aggregate[,'Q8.2_2'],
+aggregate[,'Q8.3_2'],
+aggregate[,'Q8.4_2'],
+aggregate[,'Q9.2_2'],
+aggregate[,'Q9.3_2'],
+aggregate[,'Q10.2_2'],
+aggregate[,'Q10.3_2'],
+aggregate[,'Q10.4_2'],
+aggregate[,'Q10.5_2'],
+aggregate[,'Q10.6_2'],
+aggregate[,'Q11.2_2'],
+aggregate[,'Q11.3_2'],
+aggregate[,'Q12.2_2'],
+aggregate[,'Q12.3_2'],
+aggregate[,'Q12.4_2'],
+aggregate[,'Q12.5_2'],
+aggregate[,'Q12.6_2'],
+aggregate[,'Q12.7_2'],
+aggregate[,'Q13.2_2'],
+aggregate[,'Q13.3_2'],
+aggregate[,'Q13.4_2'],
+aggregate[,'Q13.5_2'],
+aggregate[,'Q13.6_2'],
+aggregate[,'Q13.7_2'],
+aggregate[,'Q13.8_2'],
+aggregate[,'Q13.9_2'])
 
 Competency = c('PDMP Statutes and Laws',
 'PDMP Implementation/Expansion',
@@ -1064,7 +1054,7 @@ For **Part A** of the PfS / DDPI Staff Assessment survey all participants were a
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Topical Competencies**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Overall Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%"}
+```{r aggregate Overall Bar Graph, echo=FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
 filter(results, Section == "Topical") %>%
 select(Competency, Current, Desired) %>%
@@ -1128,7 +1118,7 @@ Competencies with a high degree of difference between **Current** and **Desired*
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Project Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Project Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=3}
+```{r aggregate Project Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=3}
 filter(results, Section == "Project Officer") %>%
 select(Competency, Current, Desired) %>%
   melt(.,id.vars="Competency") %>%
@@ -1163,7 +1153,7 @@ Competencies with a high degree of difference between **Current** and **Desired*
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Science Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Science Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=4}
+```{r aggregate Science Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
 filter(results, Section == "Science Officer") %>%
 select(Competency, Current, Desired) %>%
   melt(.,id.vars="Competency") %>%
@@ -1198,7 +1188,7 @@ Competencies with a high degree of difference between **Current** and **Desired*
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Evaluation Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Evaluation Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2.5}
+```{r aggregate Evaluation Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2.5}
 library(ggplot2)
 filter(results, Section == "Evaluation Officer") %>%
 select(Competency, Current, Desired) %>%
@@ -1234,7 +1224,7 @@ Competencies with a high degree of difference between **Current** and **Desired*
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Subject Matter Experts**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Subject Matter Expert Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2}
+```{r aggregate Subject Matter Expert Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2}
 library(ggplot2)
 filter(results, Section == "Subject Matter Expert") %>%
 select(Competency, Current, Desired) %>%
@@ -1279,7 +1269,7 @@ The **Functioning Competencies** were categorized into four key areas:
 
 The table below shows all **Functioning Competencies** sorted within their respective categories by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
 
-```{r aggregate Functional Competencies Table,  echo=FALSE, warning=FALSE, message=FALSE}
+```{r aggregate Functioning Competencies Table,  echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Part == "B") %>%
   select(Competency, Section, Current, Desired, Difference) %>%
   arrange(., desc(Section), desc(Difference)) %>%
@@ -1292,7 +1282,7 @@ Competencies with a high degree of difference between **Current** and **Desired*
 
 ####Key Strengths
 
-The table below shows the **Functional Competencies** with the highest reported **Current** skill levels. These competencies reflect areas of relative strength.
+The table below shows the **Functioning Competencies** with the highest reported **Current** skill levels. These competencies reflect areas of relative strength.
 
 ```{r aggregate B Strengths Table,  echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Part == "B" & Current > 4.5) %>%
@@ -1303,7 +1293,7 @@ filter(results, Part == "B" & Current > 4.5) %>%
 
 ####Key Deficits
 
-The table below shows the **Functional Competencies** with the lowest reported **Current** skill levels. These competencies reflect important areas where more training may be neccesary.
+The table below shows the **Functioning Competencies** with the lowest reported **Current** skill levels. These competencies reflect important areas where more training may be neccesary.
 
 ```{r aggregate B Deficits Table,  echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Part == "B" & Current < 3.75) %>%
@@ -1314,7 +1304,7 @@ filter(results, Part == "B" & Current < 3.75) %>%
 
 ####Areas of Desired Growth
 
-The table below shows **Functional Competencies** with the highest degree of *Difference* between average reported **Current** and **Desired** skill levels.
+The table below shows **Functioning Competencies** with the highest degree of *Difference* between average reported **Current** and **Desired** skill levels.
 
 ```{r aggregate B Desired Growth Table,  echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Part == "B" & Difference > 1.25) %>%
@@ -1329,7 +1319,7 @@ filter(results, Part == "B" & Difference > 1.25) %>%
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Interpersonal Skills**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Interpersonal Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2.8}
+```{r aggregate Interpersonal Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2.8}
 library(ggplot2)
 filter(results, Section == "Interpersonal") %>%
 select(Competency, Current, Desired) %>%
@@ -1352,7 +1342,7 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Professionalism** competencies. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Professionalism Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=2}
+```{r aggregate Professionalism Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2}
 library(ggplot2)
 filter(results, Section == "Professionalism") %>%
 select(Competency, Current, Desired) %>%
@@ -1377,7 +1367,7 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Program Management** competencies. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Program Management Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=3}
+```{r aggregate Program Management Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=3}
 library(ggplot2)
 filter(results, Section == "Program Management") %>%
 select(Competency, Current, Desired) %>%
@@ -1400,7 +1390,7 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
 
 The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Evaluation** competencies. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
 
-```{r aggregate Evaluation Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.height=3.8}
+```{r aggregate Evaluation Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=3.8}
 library(ggplot2)
 filter(results, Section == "Evaluation") %>%
 select(Competency, Current, Desired) %>%
@@ -1485,34 +1475,34 @@ c('Skills',
 'Processes'))
 
 PartC <- data.frame(
-survey[, 'Q14.2_1'],
-survey[, 'Q14.2_2'],
-survey[, 'Q14.2_3'],
-survey[, 'Q14.2_4'],
-survey[, 'Q14.2_5'],
-survey[, 'Q14.2_6'],
-survey[, 'Q14.2_7'],
-survey[, 'Q14.2_8'],
-survey[, 'Q14.2_9'],
-survey[, 'Q14.2_10'],
-survey[, 'Q14.2_11'],
-survey[, 'Q14.3_1'],
-survey[, 'Q14.3_2'],
-survey[, 'Q14.3_3'],
-survey[, 'Q14.3_4'],
-survey[, 'Q14.3_5'],
-survey[, 'Q14.3_6'],
-survey[, 'Q14.4_1'],
-survey[, 'Q14.4_2'],
-survey[, 'Q14.4_3'],
-survey[, 'Q14.4_4'],
-survey[, 'Q14.4_5'],
-survey[, 'Q14.4_6'],
-survey[, 'Q14.4_7'],
-survey[, 'Q14.4_8'],
-survey[, 'Q14.4_9'],
-survey[, 'Q14.4_10'],
-survey[, 'Q14.4_11'])
+aggregate[, 'Q14.2_1'],
+aggregate[, 'Q14.2_2'],
+aggregate[, 'Q14.2_3'],
+aggregate[, 'Q14.2_4'],
+aggregate[, 'Q14.2_5'],
+aggregate[, 'Q14.2_6'],
+aggregate[, 'Q14.2_7'],
+aggregate[, 'Q14.2_8'],
+aggregate[, 'Q14.2_9'],
+aggregate[, 'Q14.2_10'],
+aggregate[, 'Q14.2_11'],
+aggregate[, 'Q14.3_1'],
+aggregate[, 'Q14.3_2'],
+aggregate[, 'Q14.3_3'],
+aggregate[, 'Q14.3_4'],
+aggregate[, 'Q14.3_5'],
+aggregate[, 'Q14.3_6'],
+aggregate[, 'Q14.4_1'],
+aggregate[, 'Q14.4_2'],
+aggregate[, 'Q14.4_3'],
+aggregate[, 'Q14.4_4'],
+aggregate[, 'Q14.4_5'],
+aggregate[, 'Q14.4_6'],
+aggregate[, 'Q14.4_7'],
+aggregate[, 'Q14.4_8'],
+aggregate[, 'Q14.4_9'],
+aggregate[, 'Q14.4_10'],
+aggregate[, 'Q14.4_11'])
 
 colnames(CResults) <- c("Question","Area")
 

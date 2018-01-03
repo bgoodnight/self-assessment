@@ -1,5 +1,5 @@
 ---
-title: "PfS / DDPI Staff Assessment"
+title: "PfS / DDPI Staff Self-Assessment"
 output:
   pdf_document: default
   html_document:
@@ -11,11 +11,11 @@ library(dplyr)
 library(reshape2)
 
 #use the following two lines to generate a single report
-survey = read.csv('data.csv', as.is = T)
-person <- survey[30,]
+#survey = read.csv('data.csv', as.is = T)
+#person <- survey[30,]
 
 #use following line when ready to generate all reports
-#person <- survey[individual,]
+person <- survey[individual,]
 ```
 
 ##Individualized report for `r person[,'Q2.1']` `r person[,'Q2.2']`
@@ -363,7 +363,7 @@ results %>%
   kable()
 ```
 
-The relatively high difference between your **Current** and **Desired** skill levels indicate the competenc`r (if(sum(results$Difference == max(results$Difference))==1) "y" else "ies")` listed above as `r (if(sum(results$Difference == max(results$Difference))==1) "a " else "")`key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` for future training. Consider speaking to your supervisor about seeking training opportunities in the area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` listed above.
+The relatively high difference between your **Current** and **Desired** skill levels indicate the competenc`r (if(sum(results$Difference == max(results$Difference))==1) "y" else "ies")` listed above as `r (if(sum(results$Difference == max(results$Difference))==1) "a " else "")`key area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` for future training. Consider speaking to your supervisor about how you can work toward increasing your competency in the area`r (if(sum(results$Difference == max(results$Difference))==1) "" else "s")` listed above, including identifying relevant training opportunities.
 
 \newpage
 
