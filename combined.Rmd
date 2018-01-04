@@ -11,11 +11,11 @@ library(dplyr)
 library(reshape2)
 
 #use the following two lines to generate a single report
-survey = read.csv('data.csv', as.is = T)
-person <- survey[30,]
+#survey = read.csv('data.csv', as.is = T)
+#person <- survey[30,]
 
 #use following line when ready to generate all reports
-#person <- survey[individual,]
+person <- survey[individual,]
 ```
 
 #Individualized report for `r person[,'Q2.1']` `r person[,'Q2.2']`
@@ -1037,7 +1037,7 @@ results$Desired <- colMeans(Desired, na.rm = TRUE)
 results$Difference <- results$Desired - results$Current
 
 ```
-The PfS / DDPI Staff Assessment survey was divided into three parts, including:
+The PfS / DDPI Staff Self-Assessment survey was divided into three parts, including:
 
 - **Part A: Topical and Role-Specific Competencies**
 - **Part B: Functioning Competencies**
@@ -1047,7 +1047,7 @@ The PfS / DDPI Staff Assessment survey was divided into three parts, including:
 
 ###Section 1: Topical Competencies
 
-For **Part A** of the PfS / DDPI Staff Assessment survey all participants were asked to rate their **Current** and **Desired** level for each of a set of listed competencies.
+For **Part A** of the PfS / DDPI Staff Self-Assessment survey all participants were asked to rate their **Current** and **Desired** level for each of a set of listed competencies.
 
 - **Current** skill level was defined as your present level of competency in a particular skill or area
 - **Desired** level was defined as the level of ability you were interested in attaining for a particular skill or knowledge area in the future
@@ -1086,11 +1086,11 @@ filter(results, Section == "Topical" & Current > 3.5) %>%
   kable(.,digits = 2)
 ```
 
-####Key Deficits
+####Key Challenges
 
 The table below shows the **Topical Competencies** with the lowest reported **Current** skill levels. These competencies reflect important areas where more training may be neccesary.
 
-```{r aggregate Deficits Table,  echo=FALSE, warning=FALSE, message=FALSE}
+```{r aggregate Challenges Table,  echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Section == "Topical" & Current < 2.5) %>%
   select(Competency, Current) %>%
   arrange(., Current) %>%
@@ -1258,7 +1258,7 @@ Competencies with a high degree of difference between **Current** and **Desired*
 
 ##Part B: Functioning Competencies
 
-For **Part B** of the PfS / DDPI Staff Assessment survey all participants were asked to again rate their **Current** and **Desired** level for each of a set of listed **Functioning Competencies**.
+For **Part B** of the PfS / DDPI Staff Self-Assessment survey all participants were asked to again rate their **Current** and **Desired** level for each of a set of listed **Functioning Competencies**.
 
 The **Functioning Competencies** were categorized into four key areas:
 
@@ -1291,11 +1291,11 @@ filter(results, Part == "B" & Current > 4.5) %>%
   kable(.,digits = 2)
 ```
 
-####Key Deficits
+####Key Challenges
 
 The table below shows the **Functioning Competencies** with the lowest reported **Current** skill levels. These competencies reflect important areas where more training may be neccesary.
 
-```{r aggregate B Deficits Table,  echo=FALSE, warning=FALSE, message=FALSE}
+```{r aggregate B Challenges Table,  echo=FALSE, warning=FALSE, message=FALSE}
 filter(results, Part == "B" & Current < 3.75) %>%
   select(Competency, Current) %>%
   arrange(., Current) %>%
@@ -1413,7 +1413,7 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
 
 ##Part C: Skills, Knowledge, and Processes Important to You
 
-For **Part C** of the PfS / DDPI Staff Assessment survey all participants rated how important each of the following skills, knowledge areas, and processes were for their job.
+For **Part C** of the PfS / DDPI Staff Self-Assessment survey all participants rated how important each of the following skills, knowledge areas, and processes were for their job.
 
 ```{r aggregate create Part C data, echo=FALSE, warning=FALSE, message=FALSE}
 CResults <- data.frame(
