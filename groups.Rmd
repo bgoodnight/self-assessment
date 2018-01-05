@@ -19,6 +19,18 @@ if (!exists("survey")) {
      group <- 'All Participants'
 }
 
+PO <- table(c(grepl("1", aggregate$Q2.5)))["TRUE"]
+PO[is.na(PO)] <- 0
+
+SO <- table(c(grepl("2", aggregate$Q2.5) | grepl("5", aggregate$Q2.5)))["TRUE"]
+SO[is.na(SO)] <- 0
+
+EO <- table(c(grepl("3", aggregate$Q2.5)))["TRUE"]
+EO[is.na(EO)] <- 0
+
+SME <- table(c(grepl("4", aggregate$Q2.5) | grepl("5", aggregate$Q2.5) | grepl("6", aggregate$Q2.5) | grepl("7", aggregate$Q2.5)))["TRUE"]
+SME[is.na(SME)] <- 0
+
 aggregate <- data.frame(data.matrix(aggregate))
 ```
 
@@ -323,7 +335,7 @@ For **Part A** of the PfS / DDPI Staff Self-Assessment survey all **`r nrow(aggr
 - **Current** skill level was defined as your present level of competency in a particular skill or area
 - **Desired** level was defined as the level of ability you were interested in attaining for a particular skill or knowledge area in the future
 
-The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Topical Competencies**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Topical Competencies**.
 
 ```{r aggregate Overall Bar Graph, echo=FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -385,9 +397,13 @@ Competencies with a high degree of difference between **Current** and **Desired*
 
 ###Section 2: Role-Specific Competencies
 
-The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Project Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom."
+####Project Officers
 
-```{r aggregate Project Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=3}
+Of the **`r nrow(aggregate)`** participants in the **`r group`** group **`r PO`** reported having **Project Officer** duties.
+
+`r if(PO>0){"The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Project Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom."}`
+
+```{r aggregate Project Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=3, eval=(PO>0)}
 filter(results, Section == "Project Officer") %>%
 select(Competency, Current, Desired) %>%
   melt(.,id.vars="Competency") %>%
@@ -405,24 +421,27 @@ ggplot(graph, aes(x = reorder(Competency, value), y = value, fill=variable)) +
   theme(legend.position='top')
 ```
 
-The table below shows all **Role-Specific Competencies** for **Project Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+`r if(PO>0){"The table below shows all **Role-Specific Competencies** for **Project Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels."}`
 
-```{r aggregate Project Officer Table,  echo=FALSE, warning=FALSE, message=FALSE}
+```{r aggregate Project Officer Table,  echo=FALSE, warning=FALSE, message=FALSE, eval=(PO>0)}
 filter(results, Section == "Project Officer") %>%
   select(Competency, Current, Desired, Difference) %>%
   arrange(., desc(Difference)) %>%
   kable(.,digits = 2)
+
 ```
 
-Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+`r if(PO>0){"Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings."}`
 
 \newpage
 
 ####Science Officers
 
-The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Science Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+Of the **`r nrow(aggregate)`** participants in the **`r group`** group **`r SO`** reported having **Science Officer** duties.
 
-```{r aggregate Science Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
+`r if(SO>0){"The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Science Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom."}`
+
+```{r aggregate Science Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, eval=(SO>0)}
 filter(results, Section == "Science Officer") %>%
 select(Competency, Current, Desired) %>%
   melt(.,id.vars="Competency") %>%
@@ -440,24 +459,26 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
   theme(legend.position='top')
 ```
 
-The table below shows all **Role-Specific Competencies** for **Science Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+`r if(SO>0){"The table below shows all **Role-Specific Competencies** for **Science Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels."}`
 
-```{r aggregate Science Officer Table,  echo=FALSE, warning=FALSE, message=FALSE}
+```{r aggregate Science Officer Table,  echo=FALSE, warning=FALSE, message=FALSE, eval=(SO>0)}
 filter(results, Section == "Science Officer") %>%
   select(Competency, Current, Desired, Difference) %>%
   arrange(., desc(Difference)) %>%
   kable(.,digits = 2)
 ```
 
-Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+`r if(SO>0){"Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings."}`
 
 \newpage
 
 ####Evaluation Officers
 
-The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Evaluation Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+Of the **`r nrow(aggregate)`** participants in the **`r group`** group **`r EO`** reported having **Evaluation Officer** duties.
 
-```{r aggregate Evaluation Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2.5}
+`r if(EO>0){"The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Evaluation Officers**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom."}`
+
+```{r aggregate Evaluation Officer Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2.5, eval=(EO>0)}
 library(ggplot2)
 filter(results, Section == "Evaluation Officer") %>%
 select(Competency, Current, Desired) %>%
@@ -476,24 +497,26 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
   theme(legend.position='top')
 ```
 
-The table below shows all **Role-Specific Competencies** for **Evaluation Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+`r if(EO>0){"The table below shows all **Role-Specific Competencies** for **Evaluation Officers** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels."}`
 
-```{r aggregate Evaluation Officer Table,  echo=FALSE, warning=FALSE, message=FALSE}
+```{r aggregate Evaluation Officer Table,  echo=FALSE, warning=FALSE, message=FALSE, eval=(EO>0)}
 filter(results, Section == "Evaluation Officer") %>%
   select(Competency, Current, Desired, Difference) %>%
   arrange(., desc(Difference)) %>%
   kable(.,digits = 2)
 ```
 
-Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+`r if(EO>0){"Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings."}`
 
 \newpage
 
 ####Subject Matter Experts
 
-The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Subject Matter Experts**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom.
+Of the **`r nrow(aggregate)`** participants in the **`r group`** group **`r SME`** reported having **Subject Matter Expert** duties.
 
-```{r aggregate Subject Matter Expert Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2}
+`r if(SME>0){"The figure below illustrates the distribution of both **Current** and **Desired** skill levels for all **Role-Specific Competencies** for **Subject Matter Experts**. This distribution shows the competencies with the highest average reported **Desired** skill level near the top and the lowest reported average level near the bottom."}`
+
+```{r aggregate Subject Matter Expert Bar Graph, echo=FALSE, warning=FALSE, message=FALSE, fig.height=2, eval=(SME>0)}
 library(ggplot2)
 filter(results, Section == "Subject Matter Expert") %>%
 select(Competency, Current, Desired) %>%
@@ -512,16 +535,16 @@ ggplot(graph, aes(x = reorder(Competency, value, FUN = max), y = value, fill=var
   theme(legend.position='top')
 ```
 
-The table below shows all **Role-Specific Competencies** for **Subject Matter Experts** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels.
+`r if(SME>0){"The table below shows all **Role-Specific Competencies** for **Subject Matter Experts** sorted by the degree of *Difference* between average reported **Current** and **Desired** skill levels."}`
 
-```{r aggregate Subject Matter Expert Table,  echo=FALSE, warning=FALSE, message=FALSE}
+```{r aggregate Subject Matter Expert Table,  echo=FALSE, warning=FALSE, message=FALSE, eval=(SME>0)}
 filter(results, Section == "Subject Matter Expert") %>%
   select(Competency, Current, Desired, Difference) %>%
   arrange(., desc(Difference)) %>%
   kable(.,digits = 2)
 ```
 
-Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings.
+`r if(SME>0){"Competencies with a high degree of difference between **Current** and **Desired** levels represent areas of desired growth among employees, on average, and therefore may constitute important areas for future trainings."}`
 
 \newpage
 

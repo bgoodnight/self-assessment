@@ -60,7 +60,7 @@ rmarkdown::render('groups.Rmd',
                   output_file =  paste(group, ' Aggregated Report ', Sys.Date(), ".pdf", sep='')
 )
 
-group = "Opioid Overdose Epidemiology and Surveillance Team"
+group = "Epidemiology and Surveillance Team"
 aggregate <- subset(survey, Q2.4 == 3)
 rmarkdown::render('groups.Rmd',
                   output_file =  paste(group, ' Aggregated Report ', Sys.Date(), ".pdf", sep='')
@@ -72,13 +72,13 @@ rmarkdown::render('groups.Rmd',
                   output_file =  paste(group, ' Aggregated Report ', Sys.Date(), ".pdf", sep='')
 )
 
-group = "Violence & Injury Prevention Program Team"
+group = "Violence and Injury Prevention Team"
 aggregate <- subset(survey, Q2.4 == 5)
 rmarkdown::render('groups.Rmd',
                   output_file =  paste(group, ' Aggregated Report ', Sys.Date(), ".pdf", sep='')
 )
 
-group = "Evaluation & Integration Team"
+group = "Evaluation and Integration Team"
 aggregate <- subset(survey, Q2.4 == 6)
 rmarkdown::render('groups.Rmd',
                   output_file =  paste(group, ' Aggregated Report ', Sys.Date(), ".pdf", sep='')
