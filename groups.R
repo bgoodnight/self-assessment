@@ -13,7 +13,7 @@ rmarkdown::render('groups.Rmd',
 )
 
 group = "Science Officers"
-aggregate <- subset(survey, grepl("2", survey$Q2.5))
+aggregate <- subset(survey, grepl("2", survey$Q2.5) |  grepl("5", survey$Q2.5))
 rmarkdown::render('groups.Rmd',
                   output_file =  paste(group, ' Aggregated Report ', Sys.Date(), ".pdf", sep='')
 )
